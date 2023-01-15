@@ -119,4 +119,56 @@ botao_cadastrar.place(x=110, y=370)
 botao_cadastrar = Button (text="Deletar", borderwidth=2, relief="raised", overrelief="ridge", width=10, bg=co7, fg=co1)
 botao_cadastrar.place(x=200, y=370)
 
+
+# codigo para tabela
+
+lista = [[1,'Joao Futi Muanda','joao@mail.com', 123456789, "12/19/2010", 'Normal', 'consultar pessoalmente'],
+           [2,'Fortnato Mpngo', 'joao@mail.com', 123456789, "12/19/2010", 'Normal', 'consultar pessoalmente'],
+           [3,'Usando Python',  'joao@mail.com', 123456789, "12/19/2010", 'Normal', 'consultar pessoalmente'],
+           [4,'Clinton Berclidio', 'joao@mail.com', 123456789, "12/19/2010", 'Normal', 'consultar pessoalmente'],
+           [5,'A traicao da Julieta','joao@mail.com', 123456789, "12/19/2010", 'Normal', 'consultar pessoalmente']
+           ]
+
+# lista para cabecario
+tabela_head = ['ID','Nome',  'e-mail','Telefone', 'Data', 'Situação','Observação']
+
+
+# criando a tabela
+tree = ttk.Treeview(frame_esq, selectmode="extended", columns=tabela_head, show="headings")
+
+# rolagem vertical - tem de ser colocar dentro do mesmo freme para funcionar ex.: frame_esq o mesmo que está a tabela tree
+rolagem_lateral = ttk.Scrollbar(frame_esq, orient="vertical", command=tree.yview)
+
+# rolagem horizontal - tem de ser colocar dentro do mesmo freme para funcionar ex.: frame_esq o mesmo que está a tabela tree
+rolagem_inferior = ttk.Scrollbar( frame_esq, orient="horizontal", command=tree.xview)
+
+#aplicação da rolagem
+tree.configure(yscrollcommand=rolagem_lateral.set, xscrollcommand=rolagem_inferior.set)
+
+
+tree.grid(column=0, row=0, sticky='nsew')
+rolagem_lateral.grid(column=1, row=0, sticky='ns')
+rolagem_inferior.grid(column=0, row=1, sticky='ew')
+
+frame_esq.grid_rowconfigure(0, weight=12)
+
+
+hd=["nw","nw","nw","center","center","center","center"]
+h=[30,170,140,100,90,60,120]
+n=0
+
+#criei um laço de repetição para realizar toda a configuração da tabela
+for coluna in tabela_head:
+    tree.heading(coluna, text=coluna.title(), anchor=CENTER)
+    #ajusta a largura da coluna pelo tamanho do cabeçalho
+    tree.column(coluna, width=h[n],anchor=hd[n])
+    
+    n+=1
+
+for item in lista:
+    tree.insert('', 'end', values=item)
+    #end - sig que os valores serão inseridos no final de uma tabela
+    #values - é o que o for está percorrendo, e com o insert será inserido no final da lista
+    #insert serve para inserir os itens em uma tabela Treeview
+
 janela.mainloop()
