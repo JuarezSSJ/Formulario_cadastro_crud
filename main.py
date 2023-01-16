@@ -51,8 +51,8 @@ nome_app.place(x=10, y=20)
 # variavel tree global, será usada tanto na função apresentação quanto na editar
 global tree
 
-# função inserir / cadastrar
 
+# função inserir / cadastrar
 
 def cadastrar():
     nome = campo_nome.get()
@@ -81,6 +81,7 @@ def cadastrar():
         campos.destroy()
 
     apresentar()
+    
 
 # função editar
 
@@ -160,12 +161,12 @@ def deletar():
         # isso aqui será para pegar o id para atualizar o dado
         valor_id = [tree_lista[0]]
 
-        deletar_info(valor_id)        
+        deletar_info(valor_id)
         messagebox.showinfo(
             "Sucesso", "O cadastro foi deletado com sucesso")
 
         for campos in frame_dir.winfo_children():
-                campos.destroy()
+            campos.destroy()
 
         apresentar()
 
@@ -247,10 +248,14 @@ botao_editar = Button(text="Editar", command=editar, borderwidth=2, relief="rais
 botao_editar.place(x=110, y=370)
 
 # botão Deletar
-botao_deletar = Button(text="Deletar",command=deletar, borderwidth=2,
+botao_deletar = Button(text="Deletar", command=deletar, borderwidth=2,
                        relief="raised", overrelief="ridge", width=10, bg=co7, fg=co1)
 botao_deletar.place(x=200, y=370)
 
+# botão analisar
+botao_analisar = Button(text="Análise", borderwidth=2,
+                         relief="raised", overrelief="ridge", width=10, bg=co3, fg=co1)
+botao_analisar.place(x=20, y=410)
 # construindo a função para apresentar a tabela
 
 
@@ -303,7 +308,7 @@ def apresentar():
         # end - sig que os valores serão inseridos no final de uma tabela
         # values - é o que o for está percorrendo, e com o insert será inserido no final da lista
         # insert serve para inserir os itens em uma tabela Treeview
-
+    
 
 # chamando a função apresentar
 apresentar()
