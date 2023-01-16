@@ -5,7 +5,7 @@ from tkinter import messagebox
 # importar calendario
 from tkcalendar import Calendar, DateEntry
 
-#importando VIEW
+# importando VIEW
 from view import *
 
 
@@ -44,11 +44,15 @@ frame_dir.grid(row=0, column=1, rowspan=2, padx=1, pady=0, sticky=NSEW)
 # criando o 1 label
 
 nome_app = Label(frame_superior, text="Formulário de Cadastro",
-                  font=("Ivy 13 bold"), bg=co2, fg=co1, relief='flat', wraplength=310)
+                 font=("Ivy 13 bold"), bg=co2, fg=co1, relief='flat', wraplength=310)
 nome_app.place(x=10, y=20)
 
 
-#função inserir / cadastrar
+# variavel tree global, será usada tanto na função apresentação quanto na editar
+global tree
+
+# função inserir / cadastrar
+
 
 def cadastrar():
     nome = campo_nome.get()
@@ -57,7 +61,7 @@ def cadastrar():
     data = campo_data_consulta.get()
     situacao = campo_grau_urgencia.get()
     obs = campo_obs.get()
-    
+
     lista_cadastro = [nome, email, telefone, data, situacao, obs]
 
     if nome == '':
@@ -65,7 +69,7 @@ def cadastrar():
     else:
         cadastrar_info(lista_cadastro)
         messagebox.showinfo('Sucesso', 'Os dados foram inseridos com sucesso')
-        #ira limpa os entry da posição 0 até o final de cada
+        # ira limpa os entry da posição 0 até o final de cada
         campo_nome.delete(0, 'end')
         campo_email.delete(0, 'end')
         campo_telefone.delete(0, 'end')
@@ -75,12 +79,102 @@ def cadastrar():
 
     for campos in frame_dir.winfo_children():
         campos.destroy()
-    
+
     apresentar()
-    
+
+# função editar
+
+def editar():
+    try:
+        # focus serve para puxar onde for clicado
+        tree_dados = tree.focus()
+        tree_dicionario = tree.item(tree_dados)
+        # transformar o dicionario em lista
+        tree_lista = tree_dicionario['values']
+        # isso aqui será para pegar o id para atualizar o dado
+        valor_id = tree_lista[0]
+
+        campo_nome.delete(0, 'end')
+        campo_email.delete(0, 'end')
+        campo_telefone.delete(0, 'end')
+        campo_data_consulta.delete(0, 'end')
+        campo_grau_urgencia.delete(0, 'end')
+        campo_obs.delete(0, 'end')
+
+        campo_nome.insert(0, tree_lista[1])
+        campo_email.insert(0, tree_lista[2])
+        campo_telefone.insert(0, tree_lista[3])
+        campo_data_consulta.insert(0, tree_lista[4])
+        campo_grau_urgencia.insert(0, tree_lista[5])
+        campo_obs.insert(0, tree_lista[6])
+
+        def editar_cadastro():
+            nome = campo_nome.get()
+            email = campo_email.get()
+            telefone = campo_telefone.get()
+            data = campo_data_consulta.get()
+            situacao = campo_grau_urgencia.get()
+            obs = campo_obs.get()
+
+            lista_editar = [nome, email, telefone,
+                            data, situacao, obs, valor_id]
+
+            if nome == '':
+                messagebox.showerror('Erro', 'O nome não pode está vazio')
+            else:
+                atualizar_info(lista_editar)
+                messagebox.showinfo(
+                    'Sucesso', 'Os dados foram atualizado    com sucesso')
+                # ira limpa os entry da posição 0 até o final de cada
+                campo_nome.delete(0, 'end')
+                campo_email.delete(0, 'end')
+                campo_telefone.delete(0, 'end')
+                campo_data_consulta.delete(0, 'end')
+                campo_grau_urgencia.delete(0, 'end')
+                campo_obs.delete(0, 'end')
+
+            for campos in frame_dir.winfo_children():
+                campos.destroy()
+
+            apresentar()
+
+            # botão atualizar
+        botao_atualizar = Button(text="Atualizar", command=editar_cadastro, borderwidth=2,
+                                 relief="raised", overrelief="ridge", width=10, bg=co2, fg=co1)
+        botao_atualizar.place(x=110, y=410)
+
+    except IndexError:
+        messagebox.showerror(
+            "Erro", "Necessário selecionar um dos dado na tabela")
+
+
+# função deletar
+
+def deletar():
+    try:
+        # focus serve para puxar onde for clicado
+        tree_dados = tree.focus()
+        tree_dicionario = tree.item(tree_dados)
+        # transformar o dicionario em lista
+        tree_lista = tree_dicionario['values']
+        # isso aqui será para pegar o id para atualizar o dado
+        valor_id = [tree_lista[0]]
+
+        deletar_info(valor_id)        
+        messagebox.showinfo(
+            "Sucesso", "O cadastro foi deletado com sucesso")
+
+        for campos in frame_dir.winfo_children():
+                campos.destroy()
+
+        apresentar()
+
+    except IndexError:
+        messagebox.showerror(
+            "Erro", "Necessário selecionar um dos dado na tabela")
+
 
 # configurando frame_inferior
-
 # área de nome do paciente
 label_nome = Label(frame_inferior, text="Nome *", anchor=NW,
                    font=("Ivy 10 bold"), bg=co1, fg=co4, relief='flat')
@@ -140,43 +234,51 @@ campo_obs = Entry(frame_inferior, width=45,
 campo_obs.place(x=15, y=280)
 
 
-#cadastro dos botões
+# cadastro dos botões
 
-#botão Cadastrar
-botao_cadastrar = Button (text="Cadastrar", command=cadastrar, borderwidth=2, relief="raised", overrelief="ridge", width=10, bg=co2, fg=co1)
+# botão Cadastrar
+botao_cadastrar = Button(text="Cadastrar", command=cadastrar, borderwidth=2,
+                         relief="raised", overrelief="ridge", width=10, bg=co2, fg=co1)
 botao_cadastrar.place(x=20, y=370)
 
-#botão Editar
-botao_cadastrar = Button (text="Editar", borderwidth=2, relief="raised", overrelief="ridge", width=10, bg=co6, fg=co1)
-botao_cadastrar.place(x=110, y=370)
+# botão Editar
+botao_editar = Button(text="Editar", command=editar, borderwidth=2, relief="raised",
+                      overrelief="ridge", width=10, bg=co6, fg=co1)
+botao_editar.place(x=110, y=370)
 
-#botão Deletar
-botao_cadastrar = Button (text="Deletar", borderwidth=2, relief="raised", overrelief="ridge", width=10, bg=co7, fg=co1)
-botao_cadastrar.place(x=200, y=370)
+# botão Deletar
+botao_deletar = Button(text="Deletar",command=deletar, borderwidth=2,
+                       relief="raised", overrelief="ridge", width=10, bg=co7, fg=co1)
+botao_deletar.place(x=200, y=370)
 
-#construindo a função para apresentar a tabela
+# construindo a função para apresentar a tabela
+
 
 def apresentar():
 
+    global tree
     # codigo para tabela
     lista = apresentar_info()
 
     # lista para cabecario
-    tabela_head = ['ID','Nome',  'e-mail','Telefone', 'Data', 'Situação','Observação']
-
+    tabela_head = ['ID', 'Nome',  'e-mail',
+                   'Telefone', 'Data', 'Situação', 'Observação']
 
     # criando a tabela
-    tree = ttk.Treeview(frame_dir, selectmode="extended", columns=tabela_head, show="headings")
+    tree = ttk.Treeview(frame_dir, selectmode="extended",
+                        columns=tabela_head, show="headings")
 
     # rolagem vertical - tem de ser colocar dentro do mesmo freme para funcionar ex.: frame_dir o mesmo que está a tabela tree
-    rolagem_lateral = ttk.Scrollbar(frame_dir, orient="vertical", command=tree.yview)
+    rolagem_lateral = ttk.Scrollbar(
+        frame_dir, orient="vertical", command=tree.yview)
 
     # rolagem horizontal - tem de ser colocar dentro do mesmo freme para funcionar ex.: frame_dir o mesmo que está a tabela tree
-    rolagem_inferior = ttk.Scrollbar( frame_dir, orient="horizontal", command=tree.xview)
+    rolagem_inferior = ttk.Scrollbar(
+        frame_dir, orient="horizontal", command=tree.xview)
 
-    #aplicação da rolagem
-    tree.configure(yscrollcommand=rolagem_lateral.set, xscrollcommand=rolagem_inferior.set)
-
+    # aplicação da rolagem
+    tree.configure(yscrollcommand=rolagem_lateral.set,
+                   xscrollcommand=rolagem_inferior.set)
 
     tree.grid(column=0, row=0, sticky='nsew')
     rolagem_lateral.grid(column=1, row=0, sticky='ns')
@@ -184,28 +286,27 @@ def apresentar():
 
     frame_dir.grid_rowconfigure(0, weight=12)
 
+    hd = ["nw", "nw", "nw", "center", "center", "center", "center"]
+    h = [30, 170, 140, 100, 90, 60, 120]
+    n = 0
 
-    hd=["nw","nw","nw","center","center","center","center"]
-    h=[30,170,140,100,90,60,120]
-    n=0
-
-    #criei um laço de repetição para realizar toda a configuração da tabela
+    # criei um laço de repetição para realizar toda a configuração da tabela
     for coluna in tabela_head:
         tree.heading(coluna, text=coluna.title(), anchor=CENTER)
-        #ajusta a largura da coluna pelo tamanho do cabeçalho
-        tree.column(coluna, width=h[n],anchor=hd[n])
-        
-        n+=1
+        # ajusta a largura da coluna pelo tamanho do cabeçalho
+        tree.column(coluna, width=h[n], anchor=hd[n])
+
+        n += 1
 
     for item in lista:
         tree.insert('', 'end', values=item)
-        #end - sig que os valores serão inseridos no final de uma tabela
-        #values - é o que o for está percorrendo, e com o insert será inserido no final da lista
-        #insert serve para inserir os itens em uma tabela Treeview
+        # end - sig que os valores serão inseridos no final de uma tabela
+        # values - é o que o for está percorrendo, e com o insert será inserido no final da lista
+        # insert serve para inserir os itens em uma tabela Treeview
 
-#chamando a função apresentar
+
+# chamando a função apresentar
 apresentar()
-
 
 
 janela.mainloop()

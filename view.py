@@ -36,22 +36,20 @@ def apresentar_info():
             lista_apresentar.append(i)
     return lista_apresentar
 
-"""
 
-lista_atualizar = ["Júnior", 1]
+
 # função atualizar
-def atualizar_info():
+def atualizar_info(i):
     with conexao:
         cur = conexao.cursor()
-        query = "UPDATE formulario SET nome=? WHERE id=?"
-        cur.execute(query, lista_atualizar)
+        query = "UPDATE formulario SET nome=?, email=?, telefone=?, data_consulta=?, situacao=?, observacao=? WHERE id=?"
+        cur.execute(query, i)
 
 
-lista_deletar = [1]
+
 # função deletar
-def deletar_info():
+def deletar_info(i):
     with conexao:
         cur = conexao.cursor()
         query = "DELETE FROM formulario WHERE id=?"
-        cur.execute(query, lista_deletar)
-"""
+        cur.execute(query, i)
