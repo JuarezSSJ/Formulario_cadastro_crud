@@ -53,3 +53,18 @@ def deletar_info(i):
         cur = conexao.cursor()
         query = "DELETE FROM formulario WHERE id=?"
         cur.execute(query, i)
+
+
+# acessar informações para analisar
+def analisar_info():
+    lista_coluna_analisar = []
+    with conexao:
+        cur = conexao.cursor()
+        # * - sig tudo
+        query = "SELECT COUNT (DISTINCT situacao) FROM formulario"
+        cur.execute(query)
+        info = cur.fetchall()
+        #corre toda a lista da info e mandar para a lista_apresentar
+        for i in info:
+            lista_coluna_analisar.append(i)
+    return lista_coluna_analisar

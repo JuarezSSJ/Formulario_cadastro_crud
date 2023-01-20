@@ -45,7 +45,7 @@ frame_dir.grid(row=0, column=1, rowspan=2, padx=1, pady=0, sticky=NSEW)
 
 nome_app = Label(frame_superior, text="Formulário de Cadastro",
                  font=("Ivy 13 bold"), bg=co2, fg=co1, relief='flat', wraplength=310)
-nome_app.place(x=10, y=20)
+nome_app.place(x=50, y=15)
 
 
 # variavel tree global, será usada tanto na função apresentação quanto na editar
@@ -175,6 +175,36 @@ def deletar():
             "Erro", "Necessário selecionar um dos dado na tabela")
 
 
+# função analise
+def analisar():
+    janela_analise = Tk()
+    janela_analise.title("")
+    janela_analise.geometry('453x453')
+    janela_analise.configure(background=co9)
+
+    frame_sup = Frame(janela_analise, width=453, height=50, bg=co2, relief='flat')
+    frame_sup.grid(row=0, column=0)
+
+    frame_esquerda = Frame(janela_analise, width=226, height=403, bg=co1, relief='flat')
+    frame_esquerda.grid(row=1, column=0, sticky=NSEW, padx=0, pady=1)
+
+    frame_direita = Frame(janela_analise, width=226, height=403, bg=co1, relief='flat')
+    frame_direita.grid(row=0, column=1, rowspan=2, padx=1, pady=0, sticky=NSEW)
+
+    label_superior = Label(frame_sup, text="Análise", font=("Ivy 18 bold"), bg=co2, fg=co1, relief='flat', anchor=CENTER)
+    label_superior.place(x=180 , y=8)
+
+    label_esq_normal = Label(frame_esquerda, text="Normal", font=("Ivy 18 bold"), bg=co2, fg=co1, relief='flat', anchor=CENTER)
+    label_esq_normal.place(x=180 , y=8)
+
+    campo_nome = Entry(frame_inferior, width=45, justify="left", relief='solid')
+    campo_nome.place(x=15, y=40)
+
+    label_dir_normal = Label(frame_direita, text="Urgência", font=("Ivy 18 bold"), bg=co2, fg=co1, relief='flat', anchor=CENTER)
+    label_dir_normal.place(x=180 , y=8)
+
+
+
 # configurando frame_inferior
 # área de nome do paciente
 label_nome = Label(frame_inferior, text="Nome *", anchor=NW,
@@ -253,7 +283,7 @@ botao_deletar = Button(text="Deletar", command=deletar, borderwidth=2,
 botao_deletar.place(x=200, y=370)
 
 # botão analisar
-botao_analisar = Button(text="Análise", borderwidth=2,
+botao_analisar = Button(text="Análise", command=analisar, borderwidth=2,
                          relief="raised", overrelief="ridge", width=10, bg=co3, fg=co1)
 botao_analisar.place(x=20, y=410)
 # construindo a função para apresentar a tabela
