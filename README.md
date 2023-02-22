@@ -30,4 +30,14 @@ Ao abrir a aplicação, insira os dados da consulta nos campos apropriados e cli
 
 A tabela exibirá todas as consultas cadastradas. Para editar ou excluir uma consulta, selecione-a na tabela e clique no botão "Editar" ou "Excluir", respectivamente.
 
+![Tela](https://github.com/JuarezSSJ/Formulario_cadastro_crud/blob/main/Img/Tela.png?raw=true)
 
+* Tela do sistema, onde já é apresentado o banco de dados também;
+
+![Banco](https://github.com/JuarezSSJ/Formulario_cadastro_crud/blob/main/Img/banco%20de%20dados.png?raw=true)
+
+* Visão do banco de dados;
+
+![Função editar/atualizar](https://github.com/JuarezSSJ/Formulario_cadastro_crud/blob/main/Img/editar%20-%20atualizar.png?raw=true)
+
+* Função editar/atualizar os cadastros;
