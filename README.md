@@ -11,7 +11,7 @@ Este é um formulário de cadastro de consultas, desenvolvido em Python, utiliza
 
 ## Status do Projeto
 
-O projeto está funcional e pronto para uso.
+O projeto está funcional e pronto para uso. Já estudando para ativar uma função no botão analisar para realizar algumas verificações no BD.
 
 ## Funcionalidades
 
