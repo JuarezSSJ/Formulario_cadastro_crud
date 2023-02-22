@@ -28,5 +28,6 @@ Após clonar o repositório, acesse a pasta do projeto e execute o arquivo `main
 
 Ao abrir a aplicação, insira os dados da consulta nos campos apropriados e clique no botão "Cadastrar" para inserir uma nova consulta.
 
-A tabela exibirá todas as consultas cadastradas. Para editar ou excluir uma consulta, selecione-a na tabela e clique no botão "Editar" ou "Excluir", respectivamente.```
+A tabela exibirá todas as consultas cadastradas. Para editar ou excluir uma consulta, selecione-a na tabela e clique no botão "Editar" ou "Excluir", respectivamente.
+
 
